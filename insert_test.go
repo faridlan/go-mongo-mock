@@ -9,6 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
 )
 
+func TestDB(t *testing.T) {
+	DB()
+}
+
 func TestInsertOne(t *testing.T) {
 
 	mt := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
