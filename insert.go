@@ -6,7 +6,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func Insert(rekapData Rekap) (*Rekap, error) {
+type InsertRepository interface {
+	Insert(rekapData Rekap) (*Rekap, error)
+}
+
+type InsertRepositoryImpl struct {
+}
+
+func NewInsertRepository() InsertRepository {
+	return &InsertRepositoryImpl{}
+}
+
+func (repository *InsertRepositoryImpl) Insert(rekapData Rekap) (*Rekap, error) {
 	insertResult, err := rekapCollection.InsertOne(context.Background(), rekapData)
 	if err != nil {
 		return nil, err
@@ -15,6 +26,16 @@ func Insert(rekapData Rekap) (*Rekap, error) {
 	rekapData.Id = insertResult.InsertedID.(primitive.ObjectID)
 	return &rekapData, nil
 }
+
+// func (repository *InsertRepository) Insert(rekapData Rekap) (*Rekap, error) {
+// 	insertResult, err := rekapCollection.InsertOne(context.Background(), rekapData)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	rekapData.Id = insertResult.InsertedID.(primitive.ObjectID)
+// 	return &rekapData, nil
+// }
 
 func InsertMany(rekapsData []Rekap) error {
 	rekaps := make([]interface{}, len(rekapsData))

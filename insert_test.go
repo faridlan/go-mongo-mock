@@ -19,11 +19,12 @@ func TestInsertOne(t *testing.T) {
 	defer mt.Close()
 
 	mt.Run("success", func(mt *mtest.T) {
+		insertRepo := NewInsertRepository()
 		rekapCollection = *mt.Coll
 		id := primitive.NewObjectID()
 		mt.AddMockResponses(mtest.CreateSuccessResponse())
 
-		resutl, err := Insert(Rekap{
+		resutl, err := insertRepo.Insert(Rekap{
 			Id:          id,
 			CsName:      "Udin",
 			CusName:     "Jhon",
