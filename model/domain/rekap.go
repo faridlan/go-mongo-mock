@@ -1,4 +1,4 @@
-package go_mongo_mock
+package domain
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
